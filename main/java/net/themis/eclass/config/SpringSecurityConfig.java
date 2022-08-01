@@ -47,9 +47,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/teacher/courses/create","/teacher/students/get-all","/teacher/courses/students/{name}")
+                .authorizeRequests().antMatchers("/teacher/courses","/teacher/courses/students","/teacher/courses/{name}/students")
                 .hasRole("ADMIN")
-                .antMatchers("/eclass/courses/get-all","/eclass/courses/{name}","/student/courses/enroll/{name}","/eclass/home","/student/my-courses","/student/courses/unenroll/{name}","/eclass/update-profile").hasAnyRole("USER","ADMIN")
+                .antMatchers("/eclass/courses/get-all","/eclass/courses/{name}","/student/courses/{name}/enroll","/eclass/home","/student/courses","/student/courses/unenroll/{name}","/eclass/update-profile").hasAnyRole("USER","ADMIN")
                 .antMatchers("/eclass/authenticate","/eclass/register").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
                 and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -17,7 +17,7 @@ public class StudentController {
     @Autowired
     private UserService userService;
     //
-    @PostMapping("/courses/enroll/{name}")
+    @PostMapping("/courses/{name}/enroll")
     public ResponseEntity<Course> addCourse(@PathVariable String name){
         userService.enrollCourse(name);
        return new ResponseEntity<Course>(HttpStatus.CREATED);
@@ -29,7 +29,7 @@ public class StudentController {
         return new ResponseEntity<Course>(HttpStatus.OK );
     }
 
-    @GetMapping("/my-courses")
+    @GetMapping("/courses")
     public List<Course> getMyCourses(){
 
         return userService.getMyCourses();

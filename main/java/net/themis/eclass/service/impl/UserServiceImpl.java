@@ -2,13 +2,18 @@ package net.themis.eclass.service.impl;
 
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
+import net.themis.eclass.model.UserDTO;
 import net.themis.eclass.repository.UserRepository;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -19,6 +24,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CourseService courseService;
+
+    @Lazy
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     @Override
     public DAOUser findByUserName() {
@@ -39,6 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Course enrollCourse(String courseName) {
         DAOUser user = this.findByUserName();
         Course course = courseService.findByCourseName(courseName);
@@ -48,6 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Course unenrollCourse(String courseName) {
         UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetailService.getUsername();
@@ -67,9 +78,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateStudent(String username, String password, String firstName, String lastName, String email, String loggedUser) {
+    @Transactional
+    public int updateStudent(UserDTO userDTO, String username, String password, String firstName, String lastName, String email) {
+        UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username1 = userDetailService.getUsername();
 
-        userRepository.updateStudent(username,password,firstName,lastName,email,loggedUser);
+        String pass = userDTO.getPassword();
+        userDTO.setPassword(bcryptEncoder.encode(pass));
+
+        userRepository.updateStudent(username,userDTO.getPassword(),firstName,lastName,email,username1);
         return 0;
     }
 }

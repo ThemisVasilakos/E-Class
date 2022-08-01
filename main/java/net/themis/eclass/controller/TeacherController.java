@@ -22,17 +22,17 @@ public class TeacherController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/courses/create")
+    @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@RequestBody Course course){
         return new ResponseEntity<Course>(courseService.saveCourse(course), HttpStatus.CREATED );
     }
 
-    @GetMapping("/students/get-all")
+    @GetMapping("/courses/students")
     public List<DAOUser> getAllStudents(){
         return userService.findByRole("ROLE_USER");
     }
 
-    @GetMapping("/courses/students/{name}")
+    @GetMapping("/courses/{name}/students")
     public List<DAOUser> getCourseStudents(@PathVariable String name){
         return userService.getStudentsFromCourse(name);
     }
