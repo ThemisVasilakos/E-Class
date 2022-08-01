@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateStudent(String username, String password, String firstName, String lastName, String email, String loggedUser) {
-        
+
         userRepository.updateStudent(username,password,firstName,lastName,email,loggedUser);
         return 0;
     }
