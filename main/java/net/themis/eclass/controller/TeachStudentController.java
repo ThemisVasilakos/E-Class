@@ -1,14 +1,8 @@
 package net.themis.eclass.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.themis.eclass.config.JwtUtil;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.model.UserDTO;
-import net.themis.eclass.repository.CourseRepository;
-import net.themis.eclass.repository.UserRepository;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @RestController
+@RequestMapping(value = "/eclass")
 public class TeachStudentController {
 
     @Autowired
@@ -38,30 +31,25 @@ public class TeachStudentController {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @RequestMapping(value="/get-all-courses" ,method= RequestMethod.GET )
+    @GetMapping("/courses/get-all")
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
     }
 
-    @RequestMapping(value="/get-course-by-name" ,method= RequestMethod.GET )
-    public ResponseEntity<Course> getCourseByName(@RequestParam(value = "name") String name){
+    @GetMapping("/courses/{name}")
+    public ResponseEntity<Course> getCourseByName(@PathVariable String name){
         return new ResponseEntity<Course>(courseService.findByCourseName(name), HttpStatus.OK );
     }
 
-    @RequestMapping(value="/home" ,method= RequestMethod.GET )
+    @GetMapping("/home")
     public DAOUser home(){
-        UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDetailService.getUsername();
 
-        DAOUser user = userService.findByUsername(name);
+        DAOUser user = userService.findByUserName();
 
         return user;
     }
 
-    @RequestMapping(value="/update-profile" ,method= RequestMethod.PUT )
+    @PutMapping("/update-profile")
     public ResponseEntity<?> getCourseStudents(@RequestBody UserDTO user){
 
         UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -73,7 +61,7 @@ public class TeachStudentController {
         userService.updateStudent(user.getUsername(),user.getPassword(),user.getFirstName(),user.getLastName()
                 ,user.getEmail(),username);
 
-        return new ResponseEntity<DAOUser>(userService.findByUsername(user.getUsername()), HttpStatus.OK );
+        return new ResponseEntity<DAOUser>(userService.findByUserName(), HttpStatus.OK );
     }
 
 }

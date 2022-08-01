@@ -1,28 +1,31 @@
 package net.themis.eclass.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.repository.UserRepository;
+import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CourseService courseService;
+
     @Override
-    public DAOUser findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public DAOUser findByUserName() {
+        UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = userDetailService.getUsername();
+
+        return userRepository.findByUsername(name);
     }
 
     @Override
@@ -36,7 +39,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Course enrollCourse(String courseName) {
+        DAOUser user = this.findByUserName();
+        Course course = courseService.findByCourseName(courseName);
+        course.addStudents(user);
+        courseService.saveCourse(course);
+        return course;
+    }
+
+    @Override
+    public Course unenrollCourse(String courseName) {
+        UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetailService.getUsername();
+
+        Course course = courseService.findByCourseName(courseName);
+
+        course.removeStudent(username);
+        return course;
+    }
+
+    @Override
+    public List<Course> getMyCourses() {
+        UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetailService.getUsername();
+
+        return courseService.findMyCourses(username);
+    }
+
+    @Override
     public int updateStudent(String username, String password, String firstName, String lastName, String email, String loggedUser) {
+        
         userRepository.updateStudent(username,password,firstName,lastName,email,loggedUser);
         return 0;
     }

@@ -1,20 +1,13 @@
 package net.themis.eclass.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.repository.CourseRepository;
 import net.themis.eclass.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     @Autowired

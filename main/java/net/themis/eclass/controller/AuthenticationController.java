@@ -1,8 +1,5 @@
 package net.themis.eclass.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import net.themis.eclass.config.CustomUserDetailService;
 import net.themis.eclass.config.JwtUtil;
 import net.themis.eclass.model.AuthenticationRequest;
@@ -17,10 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @RestController
+@RequestMapping(value = "/eclass")
 public class AuthenticationController {
 
     @Autowired
@@ -33,7 +29,7 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @RequestMapping(value="/authenticate" ,method= RequestMethod.POST)
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -52,7 +48,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
         return ResponseEntity.ok(userDetailService.save(user));
     }

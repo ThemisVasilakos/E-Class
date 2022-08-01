@@ -1,8 +1,6 @@
 package net.themis.eclass.service;
 
-import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
-import net.themis.eclass.model.UserDTO;
 import net.themis.eclass.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {

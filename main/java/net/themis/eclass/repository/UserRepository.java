@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +22,6 @@ public interface UserRepository extends JpaRepository<DAOUser, Long> {
     List<DAOUser> getStudentsFromCourse(String courseName);
 
     @Modifying
-    @Transactional
     @Query(value="update user set username=?1,password=?2,first_name=?3,last_name=?4,email=?5 where username=?6",nativeQuery = true)
     int updateStudent(String username,String password,String firstName,String lastName,String email,String loggedUser);
 }
