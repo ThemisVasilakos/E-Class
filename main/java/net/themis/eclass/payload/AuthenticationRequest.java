@@ -1,4 +1,4 @@
-package net.themis.eclass.model;
+package net.themis.eclass.payload;
 
 public class AuthenticationRequest {
 

@@ -2,7 +2,7 @@ package net.themis.eclass.service.impl;
 
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
-import net.themis.eclass.model.UserDTO;
+import net.themis.eclass.dto.UserDTO;
 import net.themis.eclass.repository.UserRepository;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;

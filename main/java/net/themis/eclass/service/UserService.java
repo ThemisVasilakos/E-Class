@@ -2,7 +2,7 @@ package net.themis.eclass.service;
 
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
-import net.themis.eclass.model.UserDTO;
+import net.themis.eclass.dto.UserDTO;
 
 import java.util.List;
 

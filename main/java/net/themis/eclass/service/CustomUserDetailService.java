@@ -1,7 +1,7 @@
-package net.themis.eclass.config;
+package net.themis.eclass.service;
 
 import net.themis.eclass.model.DAOUser;
-import net.themis.eclass.model.UserDTO;
+import net.themis.eclass.dto.UserDTO;
 import net.themis.eclass.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

@@ -1,4 +1,4 @@
-package net.themis.eclass.model;
+package net.themis.eclass.dto;
 
 import lombok.Builder;
 import lombok.Data;

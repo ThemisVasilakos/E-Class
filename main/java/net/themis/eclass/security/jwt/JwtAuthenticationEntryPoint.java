@@ -1,4 +1,4 @@
-package net.themis.eclass.config;
+package net.themis.eclass.security.jwt;
 
 import java.io.IOException;
 import java.util.Collections;

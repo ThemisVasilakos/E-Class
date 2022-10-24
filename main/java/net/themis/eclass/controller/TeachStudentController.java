@@ -2,7 +2,7 @@ package net.themis.eclass.controller;
 
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
-import net.themis.eclass.model.UserDTO;
+import net.themis.eclass.dto.UserDTO;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

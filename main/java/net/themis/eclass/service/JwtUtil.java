@@ -1,4 +1,4 @@
-package net.themis.eclass.config;
+package net.themis.eclass.service;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;

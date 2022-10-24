@@ -1,10 +1,10 @@
 package net.themis.eclass.controller;
 
-import net.themis.eclass.config.CustomUserDetailService;
-import net.themis.eclass.config.JwtUtil;
-import net.themis.eclass.model.AuthenticationRequest;
-import net.themis.eclass.model.AuthenticationResponse;
-import net.themis.eclass.model.UserDTO;
+import net.themis.eclass.service.CustomUserDetailService;
+import net.themis.eclass.service.JwtUtil;
+import net.themis.eclass.payload.AuthenticationRequest;
+import net.themis.eclass.payload.AuthenticationResponse;
+import net.themis.eclass.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
