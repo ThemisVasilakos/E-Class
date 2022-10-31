@@ -1,2 +1,2 @@
 # E-Class
-E-Class api using Spring Boot
+E-Class API using Spring Boot
