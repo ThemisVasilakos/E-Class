@@ -52,6 +52,20 @@ public class Course {
     )
     private List<Announcement> announcements;
 
+    @ManyToMany( cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinTable(
+            joinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "courseId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "file_id",
+                    referencedColumnName = "fileId"
+            )
+    )
+    private List<File> files;
+
     public void addStudents(DAOUser user){
         if(users == null) users = new ArrayList<>();
         users.add(user);
@@ -74,6 +88,11 @@ public class Course {
     public void addAnnouncement(Announcement announcement){
         if(announcements == null) announcements = new ArrayList<>();
         announcements.add(announcement);
+    }
+
+    public void addFile(File file){
+        if(files == null) files = new ArrayList<>();
+        files.add(file);
     }
 
 }
