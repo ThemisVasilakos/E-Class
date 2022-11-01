@@ -57,9 +57,11 @@ public class SpringSecurityConfig {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/teacher/courses/new","/teacher/courses/students","/teacher/courses/{name}/students")
+                .authorizeRequests().antMatchers("/teacher/courses/new","/teacher/courses/students","/teacher/courses/{name}/students"
+                ,"/teacher/courses/{courseId}/announcements/new")
                 .hasAnyRole("ADMIN","TEACHER")
-                .antMatchers("/eclass/courses/get-all","/eclass/courses/{name}","/student/courses/{name}/enroll","/eclass/home","/student/my-courses","/student/courses/unenroll/{name}","/eclass/update-profile")
+                .antMatchers("/eclass/courses/get-all","/eclass/courses/{name}","/student/courses/{name}/enroll","/eclass/home","/student/my-courses","/student/courses/unenroll/{name}","/eclass/update-profile"
+                ,"/eclass/courses/{courseId}/announcements","/student/my-courses/announcements")
                 .hasAnyRole("TEACHER","ADMIN","STUDENT")
                 .antMatchers("/eclass/authenticate","/eclass/register").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).

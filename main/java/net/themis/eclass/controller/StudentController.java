@@ -1,8 +1,10 @@
 package net.themis.eclass.controller;
 
+import net.themis.eclass.dto.AnnouncementDTO;
 import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.service.UserService;
+import net.themis.eclass.service.impl.AnnouncementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,10 @@ public class StudentController {
 
     @Autowired
     private UserService userService;
-    //
+
+    @Autowired
+    private AnnouncementServiceImpl announcementService;
+
     @PostMapping("/courses/{name}/enroll")
     public ResponseEntity<CourseDTO> addCourse(@PathVariable String name){
         userService.enrollCourse(name);
@@ -34,6 +39,12 @@ public class StudentController {
     public List<CourseDTO> getMyCourses(){
 
         return userService.getMyCourses();
+    }
+
+    @GetMapping("/my-courses/announcements")
+    public List<AnnouncementDTO> getMyCoursesAnnouncements(){
+
+        return announcementService.getMyCoursesAnnouncements();
     }
 
 }

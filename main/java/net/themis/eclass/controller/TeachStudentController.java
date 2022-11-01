@@ -1,11 +1,13 @@
 package net.themis.eclass.controller;
 
+import net.themis.eclass.dto.AnnouncementDTO;
 import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.dto.UserDTO;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
+import net.themis.eclass.service.impl.AnnouncementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +26,18 @@ public class TeachStudentController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AnnouncementServiceImpl announcementService;
+
     @GetMapping("/courses/get-all")
     public List<CourseDTO> getAllCourses(){
         return courseService.getAllCourses();
+    }
+
+    @GetMapping("/courses/{courseId}/announcements")
+    public List<AnnouncementDTO> getCourseAnnouncements(@PathVariable Long courseId){
+
+        return announcementService.getCourseAnnouncements(courseId);
     }
 
     @GetMapping("/courses/{name}")
