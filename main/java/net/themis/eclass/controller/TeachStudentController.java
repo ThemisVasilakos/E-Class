@@ -1,5 +1,6 @@
 package net.themis.eclass.controller;
 
+import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.dto.UserDTO;
@@ -24,7 +25,7 @@ public class TeachStudentController {
     private UserService userService;
 
     @GetMapping("/courses/get-all")
-    public List<Course> getAllCourses(){
+    public List<CourseDTO> getAllCourses(){
         return courseService.getAllCourses();
     }
 

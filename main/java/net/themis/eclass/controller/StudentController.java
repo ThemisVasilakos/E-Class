@@ -1,5 +1,6 @@
 package net.themis.eclass.controller;
 
+import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,19 @@ public class StudentController {
     private UserService userService;
     //
     @PostMapping("/courses/{name}/enroll")
-    public ResponseEntity<Course> addCourse(@PathVariable String name){
+    public ResponseEntity<CourseDTO> addCourse(@PathVariable String name){
         userService.enrollCourse(name);
-       return new ResponseEntity<Course>(HttpStatus.CREATED);
+       return new ResponseEntity<CourseDTO>(HttpStatus.CREATED);
     }
 
     @PostMapping("/courses/unenroll/{name}")
-    public ResponseEntity<Course> removeCourse(@PathVariable String name){
+    public ResponseEntity<?> removeCourse(@PathVariable String name){
         userService.unenrollCourse(name);
-        return new ResponseEntity<Course>(HttpStatus.OK );
+        return new ResponseEntity<>(HttpStatus.OK );
     }
 
-    @GetMapping("/courses")
-    public List<Course> getMyCourses(){
+    @GetMapping("/my-courses")
+    public List<CourseDTO> getMyCourses(){
 
         return userService.getMyCourses();
     }

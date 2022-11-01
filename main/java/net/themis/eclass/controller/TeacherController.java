@@ -1,5 +1,6 @@
 package net.themis.eclass.controller;
 
+import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.service.CourseService;
@@ -22,14 +23,14 @@ public class TeacherController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/courses")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course){
-        return new ResponseEntity<Course>(courseService.saveCourse(course), HttpStatus.CREATED );
+    @PostMapping("/courses/new")
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO){
+        return new ResponseEntity<CourseDTO>(courseService.saveCourse(courseDTO), HttpStatus.CREATED );
     }
 
     @GetMapping("/courses/students")
     public List<DAOUser> getAllStudents(){
-        return userService.findByRole("ROLE_USER");
+        return userService.findByRole("ROLE_STUDENT");
     }
 
     @GetMapping("/courses/{name}/students")

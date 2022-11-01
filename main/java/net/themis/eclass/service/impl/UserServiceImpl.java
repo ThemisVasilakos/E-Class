@@ -1,8 +1,10 @@
 package net.themis.eclass.service.impl;
 
+import net.themis.eclass.dto.CourseDTO;
 import net.themis.eclass.model.Course;
 import net.themis.eclass.model.DAOUser;
 import net.themis.eclass.dto.UserDTO;
+import net.themis.eclass.repository.CourseRepository;
 import net.themis.eclass.repository.UserRepository;
 import net.themis.eclass.service.CourseService;
 import net.themis.eclass.service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Lazy
     @Autowired
@@ -49,32 +55,43 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Course enrollCourse(String courseName) {
+    public CourseDTO enrollCourse(String courseName) {
         DAOUser user = this.findByUserName();
         Course course = courseService.findByCourseName(courseName);
         course.addStudents(user);
-        courseService.saveCourse(course);
-        return course;
+
+        courseRepository.save(course);
+
+        CourseDTO courseDTO = new CourseDTO(course);
+        return courseDTO;
     }
 
     @Override
     @Transactional
-    public Course unenrollCourse(String courseName) {
+    public void unenrollCourse(String courseName) {
         UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetailService.getUsername();
 
         Course course = courseService.findByCourseName(courseName);
 
         course.removeStudent(username);
-        return course;
     }
 
     @Override
-    public List<Course> getMyCourses() {
+    public List<CourseDTO> getMyCourses() {
         UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetailService.getUsername();
 
-        return courseService.findMyCourses(username);
+        List<Course> courses = courseService.findMyCourses(username);
+
+        List<CourseDTO> courseDTOList = new ArrayList<>();
+
+        for(int i=0;i<courses.size();i++){
+            CourseDTO tmp = new CourseDTO(courses.get(i));
+            courseDTOList.add(tmp);
+        }
+
+        return courseDTOList;
     }
 
     @Override
